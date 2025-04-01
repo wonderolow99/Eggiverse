@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>認識鳥蛋的形狀！</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>鳥蛋形狀大配對！</h1>
+    <p>你看，鳥蛋有好多不同的形狀耶！有些比較圓 (低橢圓率)，有些比較長 (高橢圓率)，還有一些一頭尖尖的 (高不對稱性)。試著把下面的蛋蛋拖到正確的框框裡吧！</p>
+
+    <div class="game-container">
+        <!-- 放置輪廓 (Drop Zones) 的區域 -->
+        <div class="outlines-container">
+            <h2>把蛋拖到這裡：</h2>
+            <div class="outline-wrapper">
+                <div class="outline" id="outline-round" data-shape="round">
+                    <!-- 添加 class="outline-image" -->
+                    <img src="images/outline_round.png" alt="圓形輪廓" class="outline-image">
+                    <span>比較圓的蛋</span>
+                </div>
+            </div>
+            <div class="outline-wrapper">
+                <div class="outline" id="outline-oval" data-shape="oval">
+                     <!-- 添加 class="outline-image" -->
+                    <img src="images/outline_oval.png" alt="橢圓形輪廓" class="outline-image">
+                    <span>長長的蛋</span>
+                 </div>
+            </div>
+             <div class="outline-wrapper">
+                <div class="outline" id="outline-pointy" data-shape="pointy">
+                     <!-- 添加 class="outline-image" -->
+                    <img src="images/outline_pointy.png" alt="尖尖的輪廓" class="outline-image">
+                    <span>尖尖的蛋</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 放置可拖曳蛋 (Draggable Items) 的區域 -->
+        <div class="eggs-container">
+            <h2>從這裡選蛋：</h2>
+            <img src="images/egg_round.png" alt="圓圓的蛋" class="draggable-egg" id="egg1" draggable="true" data-shape="round">
+            <img src="images/egg_oval.png" alt="長長的蛋" class="draggable-egg" id="egg2" draggable="true" data-shape="oval">
+            <img src="images/egg_pointy.png" alt="尖尖的蛋" class="draggable-egg" id="egg3" draggable="true" data-shape="pointy">
+        </div>
+    </div>
+
+    <div id="feedback"></div>
+    <button id="reset-button">重新玩一次</button>
+
+    <script src="script.js"></script>
+</body>
+</html>

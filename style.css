@@ -1,0 +1,211 @@
+/* 基本樣式與字體 */
+body {
+    font-family: 'Arial', 'Microsoft JhengHei', sans-serif;
+    line-height: 1.6;
+    padding: 20px;
+    background-color: #f0f8ff;
+    color: #333;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #0056b3;
+}
+
+p {
+    text-align: center;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 遊戲容器 RWD 佈局 (使用 Flexbox - 恢復左右佈局) */
+.game-container {
+    display: flex;
+    flex-wrap: wrap; /* 在小螢幕時換行 */
+    justify-content: space-around;
+    gap: 40px; /* 容器之間的間隔 */
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* 輪廓和蛋的容器 (恢復左右佈局的設定) */
+.outlines-container,
+.eggs-container {
+    flex: 1; /* 讓兩個容器嘗試平分空間 */
+    min-width: 280px; /* 設定最小寬度，防止過度壓縮 */
+    padding: 15px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.outlines-container h2,
+.eggs-container h2 {
+    margin-top: 0;
+    font-size: 1.2em;
+    color: #555;
+}
+
+/* --- 輪廓和內部元素的樣式 (結合絕對定位需求) --- */
+
+.outline-wrapper {
+    display: inline-block; /* 讓輪廓可以並排 */
+    margin: 10px;
+    padding: 5px;
+    vertical-align: top;
+}
+
+/* 輪廓樣式 - 添加 position: relative */
+.outline {
+    border: 3px dashed #a0a0a0;
+    min-height: 120px;
+    min-width: 100px;
+    display: flex; /* 仍然使用 flex 來幫助初始內容對齊 */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 15px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    text-align: center;
+    position: relative; /* <<< 關鍵：設定為相對定位基準 */
+    overflow: hidden; /* <<< 關鍵：確保絕對定位的子元素不溢出 */
+}
+
+/* 輪廓內的圖片 (outline-image) */
+.outline .outline-image {
+    max-width: 80px;
+    height: auto;
+    opacity: 0.6;
+    margin-bottom: 5px; /* 保持一點間距給下面的文字 */
+    transition: opacity 0.3s ease; /* 添加透明度過渡 */
+    /* 確保它在堆疊順序的底層 (如果需要的話) */
+    position: relative; /* 讓 z-index 生效 */
+    z-index: 0;
+}
+
+/* 輪廓內的文字 */
+.outline span {
+    font-size: 0.9em;
+    color: #666;
+     /* 確保文字在輪廓圖之上，但在絕對定位的蛋之下 (如果需要文字可見) */
+    position: relative;
+    z-index: 0;
+}
+
+
+/* 當有東西拖曳到輪廓上方時的樣式 */
+.outline.drag-over {
+    background-color: #e0ffe0;
+    border-color: #00cc00;
+}
+
+/* 當輪廓已成功配對時的樣式 */
+.outline.matched {
+    border-style: solid;
+    border-color: #28a745;
+    background-color: #d4edda;
+}
+
+/* 配對成功後，輪廓圖片的樣式 (可選 - 變淡) */
+.outline.matched .outline-image {
+    opacity: 0.15; /* 讓輪廓變淡 */
+}
+
+/* 配對成功後，放在輪廓內的蛋圖片的樣式 (絕對定位疊加) */
+.outline.matched .draggable-egg {
+    position: absolute;          /* <<< 關鍵：改為絕對定位 */
+    top: 50%;                    /* <<< 關鍵：垂直置中 */
+    left: 50%;                   /* <<< 關鍵：水平置中 */
+    transform: translate(-50%, -50%); /* <<< 關鍵：精確置中 */
+    z-index: 1;                  /* <<< 關鍵：確保蛋在輪廓圖片和文字之上 */
+    width: 80px;                 /* 維持蛋的大小 */
+    height: auto;
+    opacity: 1;                  /* 完全不透明 */
+    cursor: default;             /* 取消拖曳樣式 */
+    margin: 0;                   /* 清除可能影響定位的 margin */
+}
+
+
+/* --- 可拖曳的蛋的樣式 (在右側容器中時) --- */
+.eggs-container img.draggable-egg {
+    width: 80px;
+    height: auto;
+    cursor: grab;
+    margin: 10px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    vertical-align: middle;
+}
+
+/* 正在被拖曳的蛋的樣式 (不變) */
+.draggable-egg.dragging {
+    opacity: 0.5;
+    transform: scale(1.1);
+    cursor: grabbing;
+}
+
+/* 訊息回饋區 (不變) */
+#feedback {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.1em;
+    font-weight: bold;
+    min-height: 1.5em;
+}
+
+/* 按鈕樣式 (不變) */
+#reset-button {
+    display: block;
+    margin: 30px auto;
+    padding: 10px 20px;
+    font-size: 1em;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#reset-button:hover {
+    background-color: #0056b3;
+}
+
+/* RWD Media Query: 當螢幕寬度小於 600px 時 (恢復堆疊佈局) */
+@media (max-width: 600px) {
+    .game-container {
+        flex-direction: column; /* 垂直堆疊 */
+        gap: 20px;
+    }
+
+    .outlines-container,
+    .eggs-container {
+        width: 100%; /* 佔滿寬度 */
+        margin-bottom: 20px;
+    }
+
+    /* 可以在此處微調小螢幕時輪廓和蛋的大小 */
+    .outline {
+        min-width: 80px;
+        min-height: 100px;
+    }
+     .outline .outline-image {
+        max-width: 60px; /* 輪廓圖稍微縮小 */
+    }
+
+    .eggs-container img.draggable-egg,
+    .outline.matched .draggable-egg { /* 也要調整已配對蛋的大小 */
+        width: 60px; /* 蛋稍微縮小 */
+        margin: 5px; /* 調整間距 */
+    }
+     /* 如果絕對定位的蛋在小螢幕需要微調，可以在這裡加 */
+    .outline.matched .draggable-egg {
+         /* 可能不需要修改，因為是相對於 outline 置中 */
+    }
+}
