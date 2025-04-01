@@ -146,7 +146,7 @@ p {
 /* 正在被拖曳的蛋的樣式 (不變) */
 .draggable-egg.dragging {
     opacity: 0.5;
-    transform: scale(1.1);
+    /*transform: scale(1.1);*/
     cursor: grabbing;
 }
 
